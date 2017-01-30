@@ -31,7 +31,7 @@ For this step I defined a function `draw_boxes` which takes as input a list of b
 
 For this step I defined a function `get_hog_features` which uses the Scikit-image function `hog()` to get Histogram of Oriented features from an image. The functions computes the HOG features from each of the 3 color channels in an image and concatenates them to gether in to a single feature vector. 
 
-![HOG images] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/hog.jpg)
+![HOG images] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/hog1.jpg)
 
 ### Step 3: Extract HOG features and build training datasets
 
