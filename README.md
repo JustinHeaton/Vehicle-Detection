@@ -1,7 +1,7 @@
 # Vehicle-Detection
 The goal of this project is to use computer vision techniques and Histogram of Oriented Gradients to detect vehicles in images and track their position across frames in a video stream.
 
-![Final Result Gif] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/result.gif)
+![Final Result Gif](https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/result1.gif)
 
 The project is completed in the following stages:
 * **Step 1**: Create a function to draw bounding rectangles based on detection of vehicles.
@@ -25,13 +25,13 @@ This project requires python 3.5 and the following dependencies:
 
 For this step I defined a function `draw_boxes` which takes as input a list of bounding rectangle coordinates and uses the OpenCV function `cv2.rectangle()` to draw the bounding rectangles on an image.
 
-![Bounding Boxes] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/boxes.jpg)
+![Bounding Boxes](https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/boxes.jpg)
 
 ### Step 2: Compute Histogram of Oriented Gradients
 
-For this step I defined a function `get_hog_features` which uses the Scikit-image function `hog()` to get Histogram of Oriented features from an image. The functions computes the HOG features from each of the 3 color channels in an image and concatenates them to gether in to a single feature vector. 
+For this step I defined a function `get_hog_features` which uses the OpenCV function `hogDescriptor()` to get Histogram of Oriented features from an image. The functions computes the HOG features from each of the 3 color channels in an image and returns them as a single feature vector. 
 
-![HOG images] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/hog1.jpg)
+![HOG images](https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/hog1.jpg)
 
 ### Step 3: Extract HOG features and build training datasets
 
@@ -74,15 +74,15 @@ Next I use the OpenCV function `cv2.findContours` to find all of the objects in 
 
 Finally, I create a copy of the original image, called `result`, on which I draw the bounding rectangles. Below you can see the process on an example image:
 
-![Annotated Cars] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/cars.jpg)
+![Annotated Cars](https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/cars.jpg)
 
 ### Step 6: Tracking images across frames in a video
 
-Finally, to track vehicles across frames in a video stream, I decided to create a class `boxes` to store all of the bounding rectangles from each of the previous 8 frames in class variables. In each frame I then concatenate the lists of bounding rectangles from current and previous frames, and then use the OpenCV function `cv2.groupRectangles` to combine overlapping rectangles in to consolidated bounding boxes. Within the group rectangles function I set the parameter `groupThreshold` equal to 6 which means that it will only look for places where there are greater than 6 overlapping boxes and it will ignore everything else. 
+Finally, to track vehicles across frames in a video stream, I decided to create a class `boxes` to store all of the bounding rectangles from each of the previous 12 frames in a list. In each frame, I then combine the lists of bounding rectangles from current and previous frames, and then use the OpenCV function `cv2.groupRectangles` to combine overlapping rectangles in to consolidated bounding boxes. Within the group rectangles function I set the parameter `groupThreshold` equal to 10 which means that it will only look for places where there are greater than 10 overlapping boxes and it will ignore everything else. 
 
-The group rectangles function takes care of the problem of false positives because if any part of the image is classified as a vehicle in fewer than 6 out of 8 consecutive frames, it will be filtered out and will not be included in the final bounding rectangles which are annotated on to the output video. 
+The group rectangles function takes care of the problem of false positives because if any part of the image is classified as a vehicle in fewer than 10 out of 12 consecutive frames, it will be filtered out and will not be included in the final bounding rectangles which are annotated on to the output video. 
 
-![Final Result Gif] (https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/result.gif)
+![Final Result Gif](https://github.com/JustinHeaton/Vehicle-Detection/blob/master/images/result1.gif)
 
 ### Discussion: 
 
@@ -90,4 +90,4 @@ The most difficult part of this project, and possibly the most important, is the
 
 My pipeline, as it is now, is still falsely identifying some non-vehicle objects such as trees and traffic signs. In order to improve performance further it will be necessary to bolster the training dataset by adding more negative features based on the false positives which were identified in the video stream. 
 
-Additionally, my pipeline is running very slowly, at several seconds per frame. For this software to be useful in actual driving it will be necessary to process the images in real time (25-30 frames per second), while right now it is running at several seconds per frame. Moving forward I will attempt to prune the number of features and reduce the number of windows searched in an attempt to speed up the prediction process. 
+Switching to the OpenCV HOG function from the skimage version greatly improved performance, but it is still not quite up to real time. Right now my pipelie procseses videos at about 4 frames per second, and to be useful in real time it would need to be closer to 25 or 30. Moving forward I will attempt to prune the number of features and reduce the number of windows searched in an attempt to speed up the prediction process. Additionally, deep learning methods might prove to be more useful and higher performing than computer vision and I plan to explore this as well.
