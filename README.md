@@ -13,13 +13,13 @@ The project is completed in the following stages:
 
 ### Code:
 This project requires python 3.5 and the following dependencies:
-- [NumPy] (http://www.numpy.org/)
-- [Pandas] (http://pandas.pydata.org/)
-- [Scikit-learn] (http://scikit-learn.org/stable/)
-- [Scikit-image] (http://scikit-image.org/docs/dev/api/skimage.html)
-- [matplotlib] (http://matplotlib.org/)
-- [OpenCV] (http://opencv.org/)
-- [MoviePy] (http://zulko.github.io/moviepy/)
+- [NumPy](http://www.numpy.org/)
+- [Pandas](http://pandas.pydata.org/)
+- [Scikit-learn](http://scikit-learn.org/stable/)
+- [Scikit-image](http://scikit-image.org/docs/dev/api/skimage.html)
+- [matplotlib](http://matplotlib.org/)
+- [OpenCV](http://opencv.org/)
+- [MoviePy](http://zulko.github.io/moviepy/)
 
 ### Step 1: Drawing Bounding Rectangles
 
